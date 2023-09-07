@@ -1,24 +1,36 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	router := mux.NewRouter()
-	router.HandleFunc("/weather", getWeather).Methods("Get")
-	err := http.ListenAndServe(":8080", router)
-	fmt.Printf("Starting the server at port 8080 ..")
+	err := godotenv.Load()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Error loading .env file")
 	}
+
+	router := mux.NewRouter()
+
+	router.HandleFunc("/current/{city}", getCurrentWeather).Methods("Get")
+	router.HandleFunc("/forecast/{city}", getWeatherForecast).Methods("Get")
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	http.Handle("/", router)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 
 }
 
-func getWeather(w http.ResponseWriter, r *http.Request) {
+func getCurrentWeather(w http.ResponseWriter, r *http.Request)
+
+func getWeatherForecast(w http.ResponseWriter, r *http.Request) {
 
 }
