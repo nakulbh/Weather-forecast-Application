@@ -13,29 +13,29 @@ import (
 )
 
 func main() {
-	// Load environment variables
+	// Loading environment variables
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
-	// Create a new Gorilla Mux router
+	// Creating a new Gorilla Mux router
 	r := mux.NewRouter()
 
-	// Define endpoints
+	// Defing endpoints
 	r.HandleFunc("/current/{city}", getCurrentWeather).Methods("GET")
 
 	// Enable CORS middleware
 	corsHandler := handlers.CORS(
-		handlers.AllowedOrigins([]string{"*"}), // You can specify specific origins if needed
+		handlers.AllowedOrigins([]string{"*"}), 
 		handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"}),
 		handlers.AllowedHeaders([]string{"Accept", "Accept-Language", "Content-Type", "Content-Length", "Accept-Encoding", "Authorization"}),
 	)
 
-	// Wrap your router with the CORS middleware
+	// Wraping router with the CORS middleware
 	r.Use(corsHandler)
 
-	// Start the server
+	// Starting the server
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
@@ -49,10 +49,10 @@ func getCurrentWeather(w http.ResponseWriter, r *http.Request) {
 	city := params["city"]
 	apiKey := os.Getenv("OPENWEATHERMAP_API_KEY")
 
-	// Construct the URL for current weather data
+	// Constructing the URL for current weather data
 	url := fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s", city, apiKey)
 
-	// Make a request to OpenWeatherMap API for current weather
+	// Making a request to OpenWeatherMap API for current weather
 	client := resty.New()
 	resp, err := client.R().Get(url)
 
