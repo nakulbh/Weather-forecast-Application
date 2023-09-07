@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
@@ -18,19 +19,29 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	// Creating a Gorilla Mux router
+	// Creating new Gorilla Mux router
 	r := mux.NewRouter()
 
-	// endpoints
+	// Defining endpoints
 	r.HandleFunc("/current/{city}", getCurrentWeather).Methods("GET")
 
-	// Start the server
+	// Enabling CORS middleware
+	corsHandler := handlers.CORS(
+		handlers.AllowedOrigins([]string{"*"}), // You can specify specific origins if needed
+		handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"}),
+		handlers.AllowedHeaders([]string{"Accept", "Accept-Language", "Content-Type", "Content-Length", "Accept-Encoding", "Authorization"}),
+	)
+
+	// Wrapingrouter with the CORS middleware.
+	r.Use(corsHandler)
+
+	// Starting the server
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
-	http.Handle("/", r)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	fmt.Println("Server is starting at port 8080 url := localhost:8080/current/{city}...")
+	log.Fatal(http.ListenAndServe(":"+port, r))
 }
 
 func getCurrentWeather(w http.ResponseWriter, r *http.Request) {
@@ -38,7 +49,7 @@ func getCurrentWeather(w http.ResponseWriter, r *http.Request) {
 	city := params["city"]
 	apiKey := os.Getenv("OPENWEATHERMAP_API_KEY")
 
-	// Constructing URL current weather data
+	// Constructing the URL for current weather data
 	url := fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s", city, apiKey)
 
 	// Making a request to OpenWeatherMap API for current weather
@@ -59,3 +70,4 @@ func getCurrentWeather(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write(resp.Body())
 }
+
