@@ -12,16 +12,16 @@ import (
 )
 
 func main() {
-	// Load environment variables
+	// Loading environment variables
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
-	// Create a new Gorilla Mux router
+	// Creating a Gorilla Mux router
 	r := mux.NewRouter()
 
-	// Define endpoints
+	// endpoints
 	r.HandleFunc("/current/{city}", getCurrentWeather).Methods("GET")
 
 	// Start the server
@@ -38,10 +38,10 @@ func getCurrentWeather(w http.ResponseWriter, r *http.Request) {
 	city := params["city"]
 	apiKey := os.Getenv("OPENWEATHERMAP_API_KEY")
 
-	// Construct the URL for current weather data
+	// Constructing URL current weather data
 	url := fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s", city, apiKey)
 
-	// Make a request to OpenWeatherMap API for current weather
+	// Making a request to OpenWeatherMap API for current weather
 	client := resty.New()
 	resp, err := client.R().Get(url)
 
