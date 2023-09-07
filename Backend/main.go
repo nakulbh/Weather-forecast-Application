@@ -13,66 +13,34 @@ import (
 )
 
 func main() {
-	// Loading environment variables
+	// Load environment variables
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
-	// Creating new Gorilla Mux router
+	// Create a new Gorilla Mux router
 	r := mux.NewRouter()
 
-	// Defining endpoints
+	// Define endpoints
 	r.HandleFunc("/current/{city}", getCurrentWeather).Methods("GET")
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	// Enabling CORS middleware
-	corsHandler := handlers.CORS(
-		handlers.AllowedOrigins([]string{"*"}), 
-=======
 	// Enable CORS middleware
-=======
-	// Enabling CORS middleware
->>>>>>> 045bdae (making backend)
 	corsHandler := handlers.CORS(
 		handlers.AllowedOrigins([]string{"*"}), // You can specify specific origins if needed
->>>>>>> 616c5ee (making backend)
 		handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"}),
 		handlers.AllowedHeaders([]string{"Accept", "Accept-Language", "Content-Type", "Content-Length", "Accept-Encoding", "Authorization"}),
 	)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	// Wrapingrouter with the CORS middleware.
-	r.Use(corsHandler)
-
-	// Starting the server
-=======
-	// Wrap your router with the CORS middleware.
+	// Wrap your router with the CORS middleware
 	r.Use(corsHandler)
 
 	// Start the server
->>>>>>> 616c5ee (making backend)
-=======
-	// Wrapingrouter with the CORS middleware.
-	r.Use(corsHandler)
-
-	// Starting the server
->>>>>>> 045bdae (making backend)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	fmt.Println("Server is starting at port 8080 url := localhost:8080/current/{city}...")
-=======
-	fmt.Println("Server is starting at port 8080...")
->>>>>>> 616c5ee (making backend)
-=======
-	fmt.Println("Server is starting at port 8080 url := localhost:8080/current/{city}...")
->>>>>>> 045bdae (making backend)
+	fmt.Printf("Server is starting at port %s...\n", port)
 	log.Fatal(http.ListenAndServe(":"+port, r))
 }
 
@@ -81,10 +49,10 @@ func getCurrentWeather(w http.ResponseWriter, r *http.Request) {
 	city := params["city"]
 	apiKey := os.Getenv("OPENWEATHERMAP_API_KEY")
 
-	// Constructing the URL for current weather data
+	// Construct the URL for current weather data
 	url := fmt.Sprintf("https://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s", city, apiKey)
 
-	// Making a request to OpenWeatherMap API for current weather
+	// Make a request to OpenWeatherMap API for current weather
 	client := resty.New()
 	resp, err := client.R().Get(url)
 
@@ -102,4 +70,3 @@ func getCurrentWeather(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write(resp.Body())
 }
-
