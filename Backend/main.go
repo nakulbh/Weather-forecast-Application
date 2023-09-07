@@ -27,7 +27,7 @@ func main() {
 
 	// Enabling CORS middleware
 	corsHandler := handlers.CORS(
-		handlers.AllowedOrigins([]string{"*"}), // You can specify specific origins if needed
+		handlers.AllowedOrigins([]string{"*"}), 
 		handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"}),
 		handlers.AllowedHeaders([]string{"Accept", "Accept-Language", "Content-Type", "Content-Length", "Accept-Encoding", "Authorization"}),
 	)
