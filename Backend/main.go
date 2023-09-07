@@ -26,11 +26,15 @@ func main() {
 	r.HandleFunc("/current/{city}", getCurrentWeather).Methods("GET")
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	// Enabling CORS middleware
 	corsHandler := handlers.CORS(
 		handlers.AllowedOrigins([]string{"*"}), 
 =======
 	// Enable CORS middleware
+=======
+	// Enabling CORS middleware
+>>>>>>> 045bdae (making backend)
 	corsHandler := handlers.CORS(
 		handlers.AllowedOrigins([]string{"*"}), // You can specify specific origins if needed
 >>>>>>> 616c5ee (making backend)
@@ -38,6 +42,7 @@ func main() {
 		handlers.AllowedHeaders([]string{"Accept", "Accept-Language", "Content-Type", "Content-Length", "Accept-Encoding", "Authorization"}),
 	)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 	// Wrapingrouter with the CORS middleware.
 	r.Use(corsHandler)
@@ -49,15 +54,25 @@ func main() {
 
 	// Start the server
 >>>>>>> 616c5ee (making backend)
+=======
+	// Wrapingrouter with the CORS middleware.
+	r.Use(corsHandler)
+
+	// Starting the server
+>>>>>>> 045bdae (making backend)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	fmt.Println("Server is starting at port 8080 url := localhost:8080/current/{city}...")
 =======
 	fmt.Println("Server is starting at port 8080...")
 >>>>>>> 616c5ee (making backend)
+=======
+	fmt.Println("Server is starting at port 8080 url := localhost:8080/current/{city}...")
+>>>>>>> 045bdae (making backend)
 	log.Fatal(http.ListenAndServe(":"+port, r))
 }
 
