@@ -17,33 +17,33 @@ Before you start, make sure you have the following dependencies installed:
    git clone https://github.com/nakulbh/Weather-forecast-Application.git
    
 2. **Navigate to the backend directory**
-   '''bash
-   cd Weather-forecast-Application/Backend
+   ```bash
+    cd Weather-forecast-Application/Backend
 
 3. **In the .env file** in the backend directory add your OpenWeatherMap API key
-  '''bash
-  OPENWEATHERMAP_API_KEY=your-api-key-here
-  PORT=8080
+   ```bash
+   OPENWEATHERMAP_API_KEY=your-api-key-here
+   PORT=8080
 
 4. **Install Go dependencies**
-  '''bash
-  go mod tidy
+   ```bash
+   go mod tidy
 
 5. **Start the backend server**
-  '''bash
-  go run main.go
+   ```bash
+   go run main.go
 
   The backend API will be accessible at http://localhost:8080.
 
 ## Frontend Setup
 
 1. **Navigate to the frontend directory**
-   '''bash
+   ```bash
    cd Weather-forecast-Application/Frontend
 
 2. **Start the backend server**
-  '''bash
-  go run main.go
+   ```bash
+   go run main.go
 
   The frontend will be accessible at http://localhost:5000.
 
