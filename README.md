@@ -21,15 +21,16 @@ Before you start, make sure you have the following dependencies installed:
     cd Weather-forecast-Application/Backend
 
 3. **In the .env file** in the backend directory add your OpenWeatherMap API key
+   
    ```bash
    OPENWEATHERMAP_API_KEY=your-api-key-here
    PORT=8080
 
-4. **Install Go dependencies**
+5. **Install Go dependencies**
    ```bash
    go mod tidy
 
-5. **Start the backend server**
+6. **Start the backend server**
    ```bash
    go run main.go
 
